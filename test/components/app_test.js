@@ -4,12 +4,16 @@ import App from '../../src/components/app';
 // Use "describe" to group together similar tests
 describe('App', () => {
 
+  // create an instance of App
+  const component = renderComponent(App);
+
   // Use "it" to test a single attribute of a target
   it('shows a comment box', () => {
-    // create an instance of App
-    const component = renderComponent(App);
-
     expect(component.find('.comment-box')).to.exist;
+  });
+
+  it('shows a comment list', () => {
+    expect(component.find('.comment-list')).to.exist;
   });
 
 });
