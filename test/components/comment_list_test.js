@@ -7,19 +7,21 @@ describe('CommentList', () => {
   let component;
 
   beforeEach(() => {
-    component = renderComponent(CommentList);
+    const props = { comments: ['New Comment', 'Other New Comment'] };
+    component = renderComponent(CommentList, null, props);
   });
 
   it('has the correct class', () => {
     expect(component).to.have.class('comment-list');
   });
 
-  // it('shows an LI for each comment', () => {
-  //
-  // });
-  //
-  // it('shows each comment that is provided', () => {
-  //
-  // });
+  it('shows an LI for each comment', () => {
+    expect(component.find('li').length).to.equal(2);
+  });
+
+  it('shows each comment that is provided', () => {
+    expect(component).to.contain('New Comment');
+    expect(component).to.contain('Other New Comment');
+  });
 
 });
