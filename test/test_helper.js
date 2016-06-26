@@ -4,10 +4,11 @@ import jquery from 'jquery';
 import TestUtils from 'react-addons-test-utils';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducers from '../src/reducers/index.js';
+import chaiJquery from 'chai-jquery';
 
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.window = global.document.defaultView;
@@ -22,20 +23,29 @@ function renderComponent(ComponentClass, props, state) {
       <ComponentClass {...props} />
     </Provider>
   );
-  console.log('componentInstance', componentInstance);
 
   // create HTML code from componentInstance
   var componentHTML = ReactDOM.findDOMNode(componentInstance);
-  console.log('componentHTML', componentHTML);
 
   // return component instance as a jQuery object
-  console.log('$(componentInstance)', $(componentInstance));
   return $(componentHTML);
 }
 
 
 // Build helper for simulating events
 
+// add a new method to jQuery
+$.fn.simulate = function(eventName, value) {
+  // 'this' is a reference to the jQuery selector item
+  if (value) {
+    // use jQuery .val() method to change value of selector
+    this.val(value);
+  }
+  TestUtils.Simulate[eventName](this[0]);
+}
+
 
 // Set up chai-jquery
+chaiJquery(chai, chai.util, $);
+
 export { renderComponent, expect };
